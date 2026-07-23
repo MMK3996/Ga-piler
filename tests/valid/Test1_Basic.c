@@ -36,9 +36,12 @@ int main() {
     int y = _t_5;
     bool _t_6 = true;
     bool flag = _t_6;
+    bool _t_9 = false;
+    if (!(flag)) goto sc_end_3;
     int _t_7 = 30;
     bool _t_8 = y > _t_7;
-    bool _t_9 = flag && _t_8;
+    _t_9 = _t_8;
+    sc_end_3:
     if (!(_t_9)) goto if_else_1;
     {
     int _t_10 = 1;
@@ -52,10 +55,10 @@ int main() {
     x = _t_12;
     }
     if_end_2:
-    loop_start_3:
+    loop_start_4:
     int _t_13 = 15;
     bool _t_14 = x < _t_13;
-    if (!(_t_14)) goto loop_end_4;
+    if (!(_t_14)) goto loop_end_5;
     {
     printf("%d\n", x);
     int _t_15 = 1;
@@ -63,24 +66,24 @@ int main() {
     x = _t_16;
     int _t_17 = 13;
     bool _t_18 = x == _t_17;
-    if (!(_t_18)) goto if_else_5;
+    if (!(_t_18)) goto if_else_6;
     {
-    goto loop_start_3;
+    goto loop_start_4;
     }
-    goto if_end_6;
-    if_else_5:
-    if_end_6:
+    goto if_end_7;
+    if_else_6:
+    if_end_7:
     int _t_19 = 14;
     bool _t_20 = x == _t_19;
-    if (!(_t_20)) goto if_else_7;
+    if (!(_t_20)) goto if_else_8;
     {
-    goto loop_end_4;
+    goto loop_end_5;
     }
-    goto if_end_8;
-    if_else_7:
-    if_end_8:
+    goto if_end_9;
+    if_else_8:
+    if_end_9:
     }
-    goto loop_start_3;
-    loop_end_4:
+    goto loop_start_4;
+    loop_end_5:
     return 0;
 }

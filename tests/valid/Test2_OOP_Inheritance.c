@@ -67,14 +67,17 @@ struct Main* new_Main() {
 
 // Method Implementations
 void Animal_function_setAge(void *caller, int a) {
+    (void)caller;
     ((struct Animal*) caller)->age = a;
 }
 
 int Animal_function_getAge(void *caller) {
+    (void)caller;
     return ((struct Animal*) caller)->age;
 }
 
 void Dog_function_speak(void *caller) {
+    (void)caller;
     int _t_2 = 101;
     printf("%d\n", _t_2);
 }

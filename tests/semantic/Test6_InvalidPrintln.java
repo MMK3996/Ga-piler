@@ -1,5 +1,8 @@
+class Dummy {}
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println(true); // Error: System.out.println requires int argument
+        Dummy d = new Dummy();
+        System.out.println(d); // Error: System.out.println requires int or boolean argument
     }
 }

@@ -50,6 +50,7 @@ struct Main* new_Main() {
 
 // Method Implementations
 void Student_function_setSupervisor(void *caller, struct Teacher* t) {
+    (void)caller;
     ((struct Student*) caller)->supervisor = t;
 }
 

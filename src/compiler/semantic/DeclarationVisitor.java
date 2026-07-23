@@ -5,11 +5,14 @@ import compiler.AUJavaParser;
 import compiler.error.AUJavaErrorListener;
 import compiler.symbol.*;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class DeclarationVisitor extends AUJavaBaseVisitor<Void> {
     private final SymbolTable symbolTable;
+    private final Map<String, AUJavaParser.ClassDeclContext> classContexts = new HashMap<>();
     private int mainCount = 0;
 
     public DeclarationVisitor(SymbolTable symbolTable) {
@@ -25,8 +28,12 @@ public class DeclarationVisitor extends AUJavaBaseVisitor<Void> {
         for (ClassSymbol cs : symbolTable.getClasses().values()) {
             if (cs.getParentName() != null) {
                 ClassSymbol parent = symbolTable.getClass(cs.getParentName());
+                AUJavaParser.ClassDeclContext classCtx = classContexts.get(cs.getName());
+                int line = classCtx != null ? classCtx.getStart().getLine() : ctx.getStart().getLine();
+                int pos = classCtx != null ? classCtx.getStart().getCharPositionInLine() : ctx.getStart().getCharPositionInLine();
+
                 if (parent == null) {
-                    AUJavaErrorListener.INSTANCE.addSemanticError(0, 0,
+                    AUJavaErrorListener.INSTANCE.addSemanticError(line, pos,
                             "Class '" + cs.getName() + "' extends undefined class '" + cs.getParentName() + "'");
                 } else {
                     cs.setParent(parent);
@@ -37,7 +44,10 @@ public class DeclarationVisitor extends AUJavaBaseVisitor<Void> {
         // Check for cyclic inheritance
         for (ClassSymbol cs : symbolTable.getClasses().values()) {
             if (hasCyclicInheritance(cs)) {
-                AUJavaErrorListener.INSTANCE.addSemanticError(0, 0,
+                AUJavaParser.ClassDeclContext classCtx = classContexts.get(cs.getName());
+                int line = classCtx != null ? classCtx.getStart().getLine() : ctx.getStart().getLine();
+                int pos = classCtx != null ? classCtx.getStart().getCharPositionInLine() : ctx.getStart().getCharPositionInLine();
+                AUJavaErrorListener.INSTANCE.addSemanticError(line, pos,
                         "Cyclic inheritance detected involving class '" + cs.getName() + "'");
                 break;
             }
@@ -45,8 +55,11 @@ public class DeclarationVisitor extends AUJavaBaseVisitor<Void> {
 
         // Check main entry point requirement
         if (mainCount != 1) {
-            AUJavaErrorListener.INSTANCE.addSemanticError(0, 0,
-                    "Program must contain exactly one main method entry point (found " + mainCount + ")");
+            AUJavaErrorListener.INSTANCE.addSemanticError(
+                    ctx.getStart().getLine(),
+                    ctx.getStart().getCharPositionInLine(),
+                    "Program must contain exactly one main method entry point (found " + mainCount + ")"
+            );
         }
 
         return null;
@@ -78,6 +91,7 @@ public class DeclarationVisitor extends AUJavaBaseVisitor<Void> {
         }
 
         ClassSymbol classSymbol = new ClassSymbol(className);
+        classContexts.put(className, ctx);
         if (ctx.EXTENDS() != null && ctx.Identifier().size() > 1) {
             classSymbol.setParentName(ctx.Identifier(1).getText());
         }

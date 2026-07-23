@@ -14,8 +14,8 @@ Built for the **Principles of Compiler Design** course at **Amirkabir University
 ## 🌟 Key Features & Language Support
 
 - **Object-Oriented Programming (OOP)**: Class declarations, instance fields, methods, constructors, and object instantiation with `new`.
-- **Inheritance & Polymorphism (Bonus 50 Pts)**: Class extension (`class Child extends Parent`), inherited field resolution, and **Dynamic Method Overriding** translated into C struct function pointer tables.
-- **Static Members **: `static` fields and `static` methods accessed via class name (`ClassName.field`, `ClassName.method()`), translated into top-level C global variables and functions.
+- **Inheritance & Polymorphism**: Class extension (`class Child extends Parent`), inherited field resolution, and **Dynamic Method Overriding** translated into C struct function pointer tables.
+- **Static Members**: `static` fields and `static` methods accessed via class name (`ClassName.field`, `ClassName.method()`), translated into top-level C global variables and functions.
 - **Unordered / Forward Definitions**: Classes and methods can be referenced before their definition site in the file.
 - **Three-Address Code (TAC)**: Linearization of complex arithmetic, relational, and logical expressions using temporary variables (`_t_1`, `_t_2`, ...).
 - **Control Flow**: Translation of `if-else` and `while` loops to C `goto` & labels, with loop-stack tracking for `break` and `continue`.

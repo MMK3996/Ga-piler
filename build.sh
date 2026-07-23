@@ -105,7 +105,7 @@ else
     exit 1
 fi
 
-echo -e "\n--- Semantic Test 6: System.out.println Non-Int Argument ---"
+echo -e "\n--- Semantic Test 6: System.out.println Non-Primitive Argument ---"
 set +e
 java -cp "bin:$RUNTIME_JAR" compiler.Main tests/semantic/Test6_InvalidPrintln.java
 STATUS_SEM6=$?

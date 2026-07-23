@@ -93,10 +93,12 @@ void Vehicle_incrementCount(void) {
 }
 
 void Vehicle_function_setWeight(void *caller, int w) {
+    (void)caller;
     ((struct Vehicle*) caller)->weight = w;
 }
 
 int Vehicle_function_calculateTax(void *caller, int baseTax) {
+    (void)caller;
     int _t_4 = 2;
     int _t_5 = ((struct Vehicle*) caller)->weight * _t_4;
     int _t_6 = baseTax + _t_5;
@@ -104,10 +106,12 @@ int Vehicle_function_calculateTax(void *caller, int baseTax) {
 }
 
 void Car_function_setEngine(void *caller, struct Engine* e) {
+    (void)caller;
     ((struct Car*) caller)->engine = e;
 }
 
 int Car_function_calculateTax(void *caller, int baseTax) {
+    (void)caller;
     if (!(((struct Car*) caller)->isElectric)) goto if_else_1;
     {
     int _t_7 = 2;
@@ -126,10 +130,12 @@ int Car_function_calculateTax(void *caller, int baseTax) {
 }
 
 void Engine_function_setHorsepower(void *caller, int hp) {
+    (void)caller;
     ((struct Engine*) caller)->horsepower = hp;
 }
 
 int Engine_function_getHorsepower(void *caller) {
+    (void)caller;
     return ((struct Engine*) caller)->horsepower;
 }
 
@@ -176,69 +182,72 @@ int main() {
     printf("%d\n", score);
     int _t_35 = 7;
     bool _t_36 = score == _t_35;
+    bool _t_40 = false;
+    if (!(_t_36)) goto sc_end_3;
     int _t_37 = 5;
     bool _t_38 = score < _t_37;
     bool _t_39 = !(_t_38);
-    bool _t_40 = _t_36 && _t_39;
+    _t_40 = _t_39;
+    sc_end_3:
     bool flag = _t_40;
-    if (!(flag)) goto if_else_3;
+    if (!(flag)) goto if_else_4;
     {
     int _t_41 = 1;
     printf("%d\n", _t_41);
     }
-    goto if_end_4;
-    if_else_3:
+    goto if_end_5;
+    if_else_4:
     {
     int _t_42 = 0;
     printf("%d\n", _t_42);
     }
-    if_end_4:
+    if_end_5:
     int _t_43 = 10;
     int counter = _t_43;
     {
     bool _t_44 = true;
     bool counter = _t_44;
-    if (!(counter)) goto if_else_5;
+    if (!(counter)) goto if_else_6;
     {
     int _t_45 = 99;
     printf("%d\n", _t_45);
     }
-    goto if_end_6;
-    if_else_5:
-    if_end_6:
+    goto if_end_7;
+    if_else_6:
+    if_end_7:
     }
     printf("%d\n", counter);
     int _t_46 = 0;
     int i = _t_46;
-    loop_start_7:
+    loop_start_8:
     int _t_47 = 10;
     bool _t_48 = i < _t_47;
-    if (!(_t_48)) goto loop_end_8;
+    if (!(_t_48)) goto loop_end_9;
     {
     int _t_49 = 1;
     int _t_50 = i + _t_49;
     i = _t_50;
     int _t_51 = 2;
     bool _t_52 = i == _t_51;
-    if (!(_t_52)) goto if_else_9;
+    if (!(_t_52)) goto if_else_10;
     {
-    goto loop_start_7;
+    goto loop_start_8;
     }
-    goto if_end_10;
-    if_else_9:
-    if_end_10:
+    goto if_end_11;
+    if_else_10:
+    if_end_11:
     int _t_53 = 5;
     bool _t_54 = i == _t_53;
-    if (!(_t_54)) goto if_else_11;
+    if (!(_t_54)) goto if_else_12;
     {
-    goto loop_end_8;
+    goto loop_end_9;
     }
-    goto if_end_12;
-    if_else_11:
-    if_end_12:
+    goto if_end_13;
+    if_else_12:
+    if_end_13:
     printf("%d\n", i);
     }
-    goto loop_start_7;
-    loop_end_8:
+    goto loop_start_8;
+    loop_end_9:
     return 0;
 }

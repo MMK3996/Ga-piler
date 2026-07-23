@@ -274,9 +274,12 @@ public class CodeGeneratorVisitor extends AUJavaBaseVisitor<String> {
         signature.append(")");
 
         methodForwardDecls.append(signature).append(";\n");
-
         methodImplementations.append(signature).append(" {\n");
+
         StringBuilder bodyCode = new StringBuilder();
+        if (!isStatic) {
+            bodyCode.append("(void)caller;\n");
+        }
 
         for (AUJavaParser.StatementContext stmt : ctx.statement()) {
             bodyCode.append(visit(stmt));
@@ -483,12 +486,44 @@ public class CodeGeneratorVisitor extends AUJavaBaseVisitor<String> {
             return new CodeResult(code.toString(), targetRes.resultVar);
         }
 
+        if (ctx instanceof AUJavaParser.LogicalAndExprContext) {
+            AUJavaParser.LogicalAndExprContext andCtx = (AUJavaParser.LogicalAndExprContext) ctx;
+            CodeResult leftRes = generateExprCode(andCtx.left);
+            CodeResult rightRes = generateExprCode(andCtx.right);
+            String resVar = newTemp();
+            String scEndLabel = newLabel("sc_end");
+
+            StringBuilder code = new StringBuilder();
+            code.append(leftRes.code);
+            code.append("bool ").append(resVar).append(" = false;\n");
+            code.append("if (!(").append(leftRes.resultVar).append(")) goto ").append(scEndLabel).append(";\n");
+            code.append(rightRes.code);
+            code.append(resVar).append(" = ").append(rightRes.resultVar).append(";\n");
+            code.append(scEndLabel).append(":\n");
+            return new CodeResult(code.toString(), resVar);
+        }
+
+        if (ctx instanceof AUJavaParser.LogicalOrExprContext) {
+            AUJavaParser.LogicalOrExprContext orCtx = (AUJavaParser.LogicalOrExprContext) ctx;
+            CodeResult leftRes = generateExprCode(orCtx.left);
+            CodeResult rightRes = generateExprCode(orCtx.right);
+            String resVar = newTemp();
+            String scEndLabel = newLabel("sc_end");
+
+            StringBuilder code = new StringBuilder();
+            code.append(leftRes.code);
+            code.append("bool ").append(resVar).append(" = true;\n");
+            code.append("if (").append(leftRes.resultVar).append(") goto ").append(scEndLabel).append(";\n");
+            code.append(rightRes.code);
+            code.append(resVar).append(" = ").append(rightRes.resultVar).append(";\n");
+            code.append(scEndLabel).append(":\n");
+            return new CodeResult(code.toString(), resVar);
+        }
+
         if (ctx instanceof AUJavaParser.AdditiveExprContext ||
             ctx instanceof AUJavaParser.MultiplicativeExprContext ||
             ctx instanceof AUJavaParser.RelationalExprContext ||
-            ctx instanceof AUJavaParser.EqualityExprContext ||
-            ctx instanceof AUJavaParser.LogicalAndExprContext ||
-            ctx instanceof AUJavaParser.LogicalOrExprContext) {
+            ctx instanceof AUJavaParser.EqualityExprContext) {
 
             String op = getOpFromBinaryExpr(ctx);
             AUJavaParser.ExprContext leftCtx = getLeftExpr(ctx);
@@ -498,7 +533,7 @@ public class CodeGeneratorVisitor extends AUJavaBaseVisitor<String> {
             CodeResult rightRes = generateExprCode(rightCtx);
 
             String temp = newTemp();
-            String typeC = (op.equals("==") || op.equals("!=") || op.equals("<") || op.equals("<=") || op.equals(">") || op.equals(">=") || op.equals("&&") || op.equals("||")) ? "bool" : "int";
+            String typeC = (op.equals("==") || op.equals("!=") || op.equals("<") || op.equals("<=") || op.equals(">") || op.equals(">=")) ? "bool" : "int";
 
             StringBuilder code = new StringBuilder();
             code.append(leftRes.code);

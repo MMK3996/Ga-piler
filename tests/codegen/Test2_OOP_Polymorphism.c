@@ -58,12 +58,14 @@ struct Main* new_Main() {
 
 // Method Implementations
 int Shape_function_computeVal(void *caller, int base) {
+    (void)caller;
     int _t_1 = 10;
     int _t_2 = base * _t_1;
     return _t_2;
 }
 
 int Circle_function_computeVal(void *caller, int base) {
+    (void)caller;
     int _t_3 = 20;
     int _t_4 = base * _t_3;
     return _t_4;

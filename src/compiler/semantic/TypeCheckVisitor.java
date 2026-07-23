@@ -210,8 +210,8 @@ public class TypeCheckVisitor extends AUJavaBaseVisitor<Type> {
     @Override
     public Type visitPrintStatement(AUJavaParser.PrintStatementContext ctx) {
         Type exprType = visit(ctx.expr());
-        if (!exprType.equals(Type.INT_TYPE)) {
-            error(ctx, "System.out.println expected int argument but got " + exprType);
+        if (!exprType.equals(Type.INT_TYPE) && !exprType.equals(Type.BOOL_TYPE)) {
+            error(ctx, "System.out.println expected int or boolean argument but got " + exprType);
         }
         return Type.VOID_TYPE;
     }
@@ -346,6 +346,14 @@ public class TypeCheckVisitor extends AUJavaBaseVisitor<Type> {
             return Type.ERROR_TYPE;
         }
 
+        // Check: ClassName.method() must target a static method
+        String targetText = ctx.expr().getText();
+        ClassSymbol staticAccessClass = symbolTable.getClass(targetText);
+        if (staticAccessClass != null && !method.isStatic()) {
+            error(ctx, "Cannot call instance method '" + methodName + "' via class name '" + targetText + "'");
+            return Type.ERROR_TYPE;
+        }
+
         return validateMethodArgs(ctx, method, ctx.arguments());
     }
 
@@ -371,6 +379,14 @@ public class TypeCheckVisitor extends AUJavaBaseVisitor<Type> {
             return Type.ERROR_TYPE;
         }
 
+        // Check: ClassName.field must target a static field
+        String targetText = ctx.expr().getText();
+        ClassSymbol staticAccessClass = symbolTable.getClass(targetText);
+        if (staticAccessClass != null && !field.isStatic()) {
+            error(ctx, "Cannot access instance field '" + fieldName + "' via class name '" + targetText + "'");
+            return Type.ERROR_TYPE;
+        }
+
         return field.getType();
     }
 
@@ -384,6 +400,15 @@ public class TypeCheckVisitor extends AUJavaBaseVisitor<Type> {
         if (method == null) {
             error(ctx, "Method '" + methodName + "' is not defined in scope");
             return Type.ERROR_TYPE;
+        }
+
+        // Check: cannot call instance method from static context
+        if (!method.isStatic()) {
+            MethodSymbol currentMethod = symbolTable.getCurrentMethod();
+            if (currentMethod != null && currentMethod.isStatic()) {
+                error(ctx, "Cannot call instance method '" + methodName + "' from static context");
+                return Type.ERROR_TYPE;
+            }
         }
 
         return validateMethodArgs(ctx, method, ctx.arguments());
@@ -456,6 +481,15 @@ public class TypeCheckVisitor extends AUJavaBaseVisitor<Type> {
 
             error(ctx, "Variable '" + varName + "' is not defined");
             return Type.ERROR_TYPE;
+        }
+
+        // Check: cannot access instance field from static context
+        if (sym.isField() && !sym.isStatic()) {
+            MethodSymbol currentMethod = symbolTable.getCurrentMethod();
+            if (currentMethod != null && currentMethod.isStatic()) {
+                error(ctx, "Cannot access instance field '" + varName + "' from static context");
+                return Type.ERROR_TYPE;
+            }
         }
 
         return sym.getType();
