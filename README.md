@@ -3,7 +3,6 @@
 [![Language](https://img.shields.io/badge/Language-Java_25-orange.svg)](https://www.oracle.com/java/)
 [![Parser Generator](https://img.shields.io/badge/Parser_Generator-ANTLR_4.9.2-blue.svg)](https://www.antlr.org/)
 [![Target](https://img.shields.io/badge/Target-C_(GCC)-green.svg)](https://gcc.gnu.org/)
-[![Score](https://img.shields.io/badge/Project_Score-275%2F275-brightgreen.svg)](#score-breakdown)
 
 A full-featured **Source-to-Source Compiler (Transpiler)** converting programs written in **AUJava** (a rich subset of Java) into clean, standard, executable **C code**. 
 
@@ -16,7 +15,7 @@ Built for the **Principles of Compiler Design** course at **Amirkabir University
 
 - **Object-Oriented Programming (OOP)**: Class declarations, instance fields, methods, constructors, and object instantiation with `new`.
 - **Inheritance & Polymorphism (Bonus 50 Pts)**: Class extension (`class Child extends Parent`), inherited field resolution, and **Dynamic Method Overriding** translated into C struct function pointer tables.
-- **Static Members (Bonus 25 Pts)**: `static` fields and `static` methods accessed via class name (`ClassName.field`, `ClassName.method()`), translated into top-level C global variables and functions.
+- **Static Members **: `static` fields and `static` methods accessed via class name (`ClassName.field`, `ClassName.method()`), translated into top-level C global variables and functions.
 - **Unordered / Forward Definitions**: Classes and methods can be referenced before their definition site in the file.
 - **Three-Address Code (TAC)**: Linearization of complex arithmetic, relational, and logical expressions using temporary variables (`_t_1`, `_t_2`, ...).
 - **Control Flow**: Translation of `if-else` and `while` loops to C `goto` & labels, with loop-stack tracking for `break` and `continue`.
