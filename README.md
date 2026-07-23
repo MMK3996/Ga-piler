@@ -11,7 +11,7 @@ Built for the **Principles of Compiler Design** course at **Amirkabir University
 ---
 
 
-## 🌟 Key Features & Language Support
+##  Key Features & Language Support
 
 - **Object-Oriented Programming (OOP)**: Class declarations, instance fields, methods, constructors, and object instantiation with `new`.
 - **Inheritance & Polymorphism**: Class extension (`class Child extends Parent`), inherited field resolution, and **Dynamic Method Overriding** translated into C struct function pointer tables.
@@ -25,7 +25,7 @@ Built for the **Principles of Compiler Design** course at **Amirkabir University
 
 ---
 
-## 📁 Repository Directory Structure
+##  Repository Directory Structure
 
 ```
 compiler project/
@@ -62,7 +62,7 @@ compiler project/
 
 ---
 
-## ⚙️ Prerequisites & System Requirements
+##  Prerequisites & System Requirements
 
 - **Java Development Kit (JDK)**: OpenJDK 17 or higher (tested on OpenJDK 25).
 - **ANTLR 4**: ANTLR 4.9.2 runtime jar (`antlr4-runtime.jar`).
@@ -71,7 +71,7 @@ compiler project/
 
 ---
 
-## 🚀 How to Build & Run
+##  How to Build & Run
 
 ### Automated Build & Full Test Suite
 
@@ -108,42 +108,6 @@ chmod +x build.sh
 
 ---
 
-## 🧪 Comprehensive Test Case (`Test_Comprehensive.java`)
-
-A heavy test file is included at [`tests/Test_Comprehensive.java`](file:///home/mirza/compiler%20project./tests/Test_Comprehensive.java) that validates **every single feature** of the 275-point rubric in a single file:
-
-```java
-// Features tested in Test_Comprehensive.java:
-// 1. Static Fields & Static Methods (Vehicle.vehicleCount, Vehicle.incrementCount())
-// 2. Forward / Unordered Class References (Engine referenced inside Car before Engine definition)
-// 3. OOP Inheritance & Polymorphism (Car extends Vehicle)
-// 4. Dynamic Method Overriding (myCar.calculateTax() vs v.calculateTax())
-// 5. Operator Precedence & TAC (1 + 2 * 3 = 7)
-// 6. Logical & Relational Expressions ((score == 7) && !(score < 5))
-// 7. Variable Scope Shadowing (inner boolean counter vs outer int counter)
-// 8. Control Flow (while loop with break and continue)
-```
-
-### Expected Runtime Output of `Test_Comprehensive`:
-
-```
-2
-300
-1000
-3500
-250
-250
-7
-1
-99
-10
-1
-3
-4
-```
-
----
-
-## 📝 License & Credits
+##  License & Credits
 
 Developed for the Principles of Compiler Design course, Department of Computer Engineering, Amirkabir University of Technology (Tehran Polytechnic).
