@@ -1,4 +1,4 @@
-# AUJava to C Transpiler (275/275 Score)
+# AUJava to C Transpiler
 
 [![Language](https://img.shields.io/badge/Language-Java_25-orange.svg)](https://www.oracle.com/java/)
 [![Parser Generator](https://img.shields.io/badge/Parser_Generator-ANTLR_4.9.2-blue.svg)](https://www.antlr.org/)
