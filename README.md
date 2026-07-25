@@ -6,7 +6,7 @@
 
 A full-featured **Source-to-Source Compiler (Transpiler)** converting programs written in **AUJava** (a rich subset of Java) into clean, standard, executable **C code**. 
 
-Built for the **Principles of Compiler Design** course at **Amirkabir University of Technology (Tehran Polytechnic)**, under supervision of **Dr. Momtazi** (TAs: Mohammad Heidari Rad & Rezvan Afarin).
+Built for the **Principles of Compiler Design** course at **Amirkabir University of Technology (Tehran Polytechnic)**.
 
 ---
 
@@ -50,13 +50,12 @@ compiler project/
 │           └── CodeGeneratorVisitor.java  # Phase 4: TAC & C Code Generator
 ├── bin/                      # Output directory containing compiled Java .class files
 ├── tests/                    # Automated Test Suite & Heavy Test Case
-│   ├── Test_Comprehensive.java # Comprehensive test exercising all 275 score features
+│   ├── Test_Comprehensive.java # Comprehensive test
 │   ├── valid/                # Valid syntax test cases
 │   ├── invalid/              # Lexical & syntax error test cases
 │   ├── semantic/             # Semantic error test cases
 │   └── codegen/              # Code generator & GCC runtime tests
 ├── build.sh                  # Automation script for ANTLR, javac compilation & GCC tests
-├── task.md                   # Project score roadmap & completion checklist
 └── README.md                 # Complete project documentation
 ```
 
@@ -107,7 +106,3 @@ chmod +x build.sh
    ```
 
 ---
-
-##  License & Credits
-
-Developed for the Principles of Compiler Design course, Department of Computer Engineering, Amirkabir University of Technology (Tehran Polytechnic).
